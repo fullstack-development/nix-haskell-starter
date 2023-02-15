@@ -1,0 +1,78 @@
+cabal-version:      2.4
+name:               nix-haskell-starter
+version:            0.1.0.0
+
+-- A short (one-line) description of the package.
+-- synopsis:
+
+-- A longer description of the package.
+-- description:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+
+license: Apache-2.0
+license-files: LICENSE
+author:             Your name
+maintainer:         Your email
+
+-- A copyright notice.
+-- copyright:
+-- category:
+-- extra-source-files: CHANGELOG.md
+
+flag defer-plugin-errors
+    description:
+        Defer errors from the plugin, useful for things like Haddock that can't handle it.
+    default: False
+    manual: True
+
+common lang
+    default-language:   Haskell2010
+    ghc-options:
+      -Wall -Wnoncanonical-monad-instances
+      -Wincomplete-uni-patterns -Wincomplete-record-updates
+      -Wredundant-constraints -Widentities -rtsopts
+
+library
+    import: lang
+    default-extensions:
+      OverloadedStrings
+      RecordWildCards
+    -- exposed-modules:
+    build-depends:
+      base >= 4.9 && < 5,
+      text
+    hs-source-dirs: src
+
+test-suite test
+  import: lang
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs: test
+  default-extensions:
+    OverloadedStrings
+  build-depends:
+    nix-haskell-starter -any,
+  build-depends:
+    base >=4.9 && <5,
+    text,
+  build-depends:
+    hspec,
+    hspec-core,
+    tasty -any,
+    tasty-hspec
+  -- other-modules:
+
+executable hello
+  import: lang
+  main-is: Main.hs
+  hs-source-dirs: app
+  ghc-options:
+    -threaded
+  build-depends:
+    aeson -any,
+    base >= 4.9 && < 5,
+    nix-haskell-starter -any,
+    mtl == 2.2.2,
+    servant-auth-server
